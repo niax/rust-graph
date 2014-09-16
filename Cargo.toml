@@ -1,0 +1,4 @@
+[package]
+name = "rust-graph"
+version = "0.0.1"
+authors = ["Nicholas Hollett <niax@niax.co.uk>"]
