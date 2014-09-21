@@ -44,12 +44,16 @@
 <h1 class='fqn'><div class='in-band'>Struct <a href='index.html'>graph</a>::<wbr><a class='struct' href=''>ShortestPathResult</a><wbr></div><div class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-974' href='../src/graph/src/graph.rs.html#222-225'>[src]</a></div></h1>
+        </span><a id='src-974' href='../src/graph/src/graph.rs.html#235-241'>[src]</a></div></h1>
 <pre class='rust struct'>pub struct ShortestPathResult&lt;V&gt; {
     pub path: <a class='struct' href='http://doc.rust-lang.org/master/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>&gt;,
     pub cost: V,
-}</pre><h2 class='fields'>Fields</h2>
-<table><tr><td id='structfield.path'><a class='stability Unmarked' title='No stability level'></a><code>path</code></td><td></td></tr><tr><td id='structfield.cost'><a class='stability Unmarked' title='No stability level'></a><code>cost</code></td><td></td></tr></table></section>
+}</pre><div class='docblock'><p>Structure used as the return value of calculating the shortest path</p>
+</div><h2 class='fields'>Fields</h2>
+<table><tr><td id='structfield.path'><a class='stability Unmarked' title='No stability level'></a><code>path</code></td><td><div class='docblock'><p>The node identifiers for each node in the calculated path</p>
+</div></td></tr><tr><td id='structfield.cost'><a class='stability Unmarked' title='No stability level'></a><code>cost</code></td><td><div class='docblock'><p>The cost of the path, calculated as the sum of edge data for
+each edge on the path</p>
+</div></td></tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
