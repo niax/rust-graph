@@ -1,4 +1,4 @@
-pub use graph::{Graph, NodeIdentifier, Edge};
+pub use graph::{Graph, NodeIdentifier, Edge, ShortestPathResult};
 
-// Internal modules
+// Exported modules
 mod graph;
