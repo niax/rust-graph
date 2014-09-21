@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Graph` struct in crate `graph`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Graph">
+
+    <title>graph::Graph - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>graph</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Edge.html'>Edge</a><a class='struct current' href='struct.Graph.html'>Graph</a><a class='struct ' href='struct.ShortestPathResult.html'>ShortestPathResult</a></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><div class='in-band'>Struct <a href='index.html'>graph</a>::<wbr><a class='struct' href=''>Graph</a><wbr></div><div class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]
+            </a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-28' href='../src/graph/src/graph.rs.html#17-20'>[src]</a></div></h1>
+<pre class='rust struct'>pub struct Graph&lt;'a, T, V&gt; {
+    // some fields omitted
+}</pre><div class='docblock'><p>Base Graph implementation</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T, V&gt; <a class='struct' href='../graph/struct.Graph.html' title='graph::Graph'>Graph</a>&lt;'a, T, V&gt;</code></h3><div class='impl-methods'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../graph/struct.Graph.html' title='graph::Graph'>Graph</a>&lt;'a, T, V&gt;</code></h4>
+<div class='docblock'><p>Create a new Graph</p>
+
+<ul>
+<li><code>T</code> is the data type to be stored on the Nodes</li>
+<li><code>V</code> is the data type to be stored on the Edges</li>
+</ul>
+</div><h4 id='method.get' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self, index: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>) -&gt; &amp;T</code></h4>
+<div class='docblock'><p>Get the value for the given NodeIdentifier</p>
+</div><h4 id='method.insert' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.insert' class='fnname'>insert</a>(&amp;mut self, value: T) -&gt; <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a></code></h4>
+<div class='docblock'><p>Insert a value into the graph, returns the node identifier</p>
+
+<h1 id="example" class='section-header'><a
+                           href="#example">Example</a></h1><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>graph</span>::<span class='ident'>Graph</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>g</span>: <span class='ident'>Graph</span><span class='op'>&lt;</span><span class='ident'>int</span>, ()<span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Graph</span>::<span class='ident'>new</span>();
+<span class='kw'>let</span> <span class='ident'>n1</span> <span class='op'>=</span> <span class='ident'>g</span>.<span class='ident'>insert</span>(<span class='number'>5i</span>);
+<span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>*</span><span class='ident'>g</span>.<span class='ident'>get</span>(<span class='ident'>n1</span>) <span class='op'>==</span> <span class='number'>5i</span>);
+</pre>
+</div><h4 id='method.connect' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.connect' class='fnname'>connect</a>(&amp;mut self, from_index: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>, to_index: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>, data: V)</code></h4>
+<div class='docblock'><p>Connect two nodes in the graph.</p>
+
+<p>This is a directed edge, with the edge going from <code>from_index</code> going to <code>to_index</code>.
+The <code>data</code> is attached to the edge.</p>
+</div><h4 id='method.connected' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.connected' class='fnname'>connected</a>(&amp;self, from_index: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>, to_index: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>) -&gt; <a href='http://doc.rust-lang.org/master/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Test if two nodes are connected</p>
+
+<p>True if the node represented by <code>from_index</code> has an edge from it to the node identified
+by <code>to_index</code>.</p>
+</div><h4 id='method.connection' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.connection' class='fnname'>connection</a>(&amp;self, from_index: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>, to_index: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/master/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='struct' href='../graph/struct.Edge.html' title='graph::Edge'>Edge</a>&lt;V&gt;&gt;</code></h4>
+<div class='docblock'><p>Get the edge between nodes.</p>
+
+<p><code>None</code> is used to imply that there is no edge between these nodes.</p>
+</div><h4 id='method.connections' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.connections' class='fnname'>connections</a>(&amp;self, for_node: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>) -&gt; &amp;<a class='struct' href='http://doc.rust-lang.org/master/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../graph/struct.Edge.html' title='graph::Edge'>Edge</a>&lt;V&gt;&gt;</code></h4>
+<div class='docblock'><p>Get a complete list of edges from the node indentified by <code>for_node</code></p>
+</div><h4 id='method.visit_breadth_first' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.visit_breadth_first' class='fnname'>visit_breadth_first</a>(&amp;self, from_index: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>, visitor: |<a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>, &amp;T| -&gt; <a href='http://doc.rust-lang.org/master/std/primitive.bool.html'>bool</a>)</code></h4>
+<div class='docblock'><p>Traverse the graph, visiting each node directly, or indirectly, connected to the
+node identified by <code>from_index</code>.</p>
+
+<p>Calls <code>visitor</code> with the value of each node on the trip,
+visiting sibling nodes first before decending deeper into the graph.
+In the event of cycles, each node is visited only once.</p>
+</div><h4 id='method.iter' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.iter' class='fnname'>iter</a>(&amp;'a self) -&gt; <a class='struct' href='http://doc.rust-lang.org/master/core/slice/struct.Items.html' title='core::slice::Items'>Items</a>&lt;'a, T&gt;</code></h4>
+<div class='docblock'><p>Iterate over the nodes of the graph</p>
+</div><h4 id='method.node_count' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.node_count' class='fnname'>node_count</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/master/std/primitive.uint.html'>uint</a></code></h4>
+<div class='docblock'><p>Get the number of nodes in the graph</p>
+</div></div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T: <a class='trait' href='http://doc.rust-lang.org/master/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a>, V&gt; <a class='struct' href='../graph/struct.Graph.html' title='graph::Graph'>Graph</a>&lt;'a, T, V&gt;</code></h3><div class='impl-methods'><h4 id='method.bfs' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.bfs' class='fnname'>bfs</a>(&amp;self, from_node: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>, wanted: T) -&gt; <a class='type' href='http://doc.rust-lang.org/master/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>&gt;</code></h4>
+<div class='docblock'><p>Search the graph for a node with the value <code>wanted</code>.
+Returns true if the value is in the graph, false otherwise.</p>
+
+<p>Starting at <code>from_node</code>, traverse the graph, breadth first looking for the wanted
+value.</p>
+</div><h4 id='method.contains' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.contains' class='fnname'>contains</a>(&amp;self, value: T) -&gt; <a class='type' href='http://doc.rust-lang.org/master/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>&gt;</code></h4>
+<div class='docblock'><p>Searches the graph for the first node with the <code>value</code> given.</p>
+
+<p>Note that this is different from <code>bfs</code> which conserns itself
+with connectedness.</p>
+</div><h4 id='method.contains_ref' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.contains_ref' class='fnname'>contains_ref</a>(&amp;self, value: &amp;T) -&gt; <a class='type' href='http://doc.rust-lang.org/master/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T: <a class='trait' href='http://doc.rust-lang.org/master/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>, V&gt; <a class='struct' href='../graph/struct.Graph.html' title='graph::Graph'>Graph</a>&lt;'a, T, V&gt;</code></h3><div class='impl-methods'><h4 id='method.insert_all' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.insert_all' class='fnname'>insert_all</a>(&amp;mut self, values: &amp;<a href='http://doc.rust-lang.org/master/std/primitive.slice.html'>[T]</a>) -&gt; <a class='struct' href='http://doc.rust-lang.org/master/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T, V: <a class='trait' href='http://doc.rust-lang.org/master/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>&gt; <a class='struct' href='../graph/struct.Graph.html' title='graph::Graph'>Graph</a>&lt;'a, T, V&gt;</code></h3><div class='impl-methods'><h4 id='method.connect_all' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.connect_all' class='fnname'>connect_all</a>(&amp;mut self, connections: &amp;<a href='http://doc.rust-lang.org/master/std/primitive.slice.html'>[<a href='http://doc.rust-lang.org/master/std/primitive.tuple.html'>(<a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>, <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>, V)</a>]</a>)</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T, V: <a class='trait' href='http://doc.rust-lang.org/master/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + <a class='trait' href='http://doc.rust-lang.org/master/core/cmp/trait.Ord.html' title='core::cmp::Ord'>Ord</a> + <a class='trait' href='http://doc.rust-lang.org/master/core/cmp/trait.PartialOrd.html' title='core::cmp::PartialOrd'>PartialOrd</a> + <a class='trait' href='http://doc.rust-lang.org/master/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> + <a class='trait' href='http://doc.rust-lang.org/master/core/num/trait.Unsigned.html' title='core::num::Unsigned'>Unsigned</a>&gt; <a class='struct' href='../graph/struct.Graph.html' title='graph::Graph'>Graph</a>&lt;'a, T, V&gt;</code></h3><div class='impl-methods'><h4 id='method.shortest_path' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.shortest_path' class='fnname'>shortest_path</a>(&amp;self, from_node: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>, to_node: <a class='type' href='../graph/type.NodeIdentifier.html' title='graph::NodeIdentifier'>NodeIdentifier</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/master/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../graph/struct.ShortestPathResult.html' title='graph::ShortestPathResult'>ShortestPathResult</a>&lt;V&gt;&gt;</code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T: <a class='trait' href='http://doc.rust-lang.org/master/core/fmt/trait.Show.html' title='core::fmt::Show'>Show</a>, V: <a class='trait' href='http://doc.rust-lang.org/master/core/fmt/trait.Show.html' title='core::fmt::Show'>Show</a>&gt; <a class='trait' href='http://doc.rust-lang.org/master/core/fmt/trait.Show.html' title='core::fmt::Show'>Show</a> for <a class='struct' href='../graph/struct.Graph.html' title='graph::Graph'>Graph</a>&lt;'a, T, V&gt;</code></h3><div class='impl-methods'><h4 id='method.fmt' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='http://doc.rust-lang.org/master/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/master/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "graph";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>
