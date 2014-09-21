@@ -163,6 +163,11 @@ impl<'a, T: Eq, V> Graph<'a, T, V> {
 }
 
 impl<'a, T: Clone, V> Graph<'a, T, V> {
+    /// Insert a slice of values into the graph
+    ///
+    /// Inserts clones of each of the values in the slice given into the graph
+    /// Returns a vector of identifiers for the nodes inserted, in the order
+    /// of the values that were input.
     pub fn insert_all(&mut self, values: &[T]) -> Vec<NodeIdentifier> {
         let mut node_indexes: Vec<NodeIdentifier> = Vec::new();
         for value in values.iter() {
@@ -173,6 +178,13 @@ impl<'a, T: Clone, V> Graph<'a, T, V> {
 }
 
 impl<'a, T, V: Clone> Graph<'a, T, V> {
+    /// Connects many nodes together
+    ///
+    /// Each tuple in the input makes a new connection, with the first element being
+    /// the from node, the second being a target node and the third being the data stored
+    /// on the created edge.
+    ///
+    /// Note that the data will be cloned onto the edge.
     pub fn connect_all(&mut self, connections: &[(NodeIdentifier, NodeIdentifier, V)]) {
         for conn in connections.iter() {
             self.connect(
@@ -219,13 +231,25 @@ impl<V: Ord> PartialOrd for NodeCost<V> {
     }
 }
 
+/// Structure used as the return value of calculating the shortest path
 pub struct ShortestPathResult<V> {
+    /// The node identifiers for each node in the calculated path
     pub path: Vec<NodeIdentifier>,
+    /// The cost of the path, calculated as the sum of edge data for
+    /// each edge on the path
     pub cost: V,
 }
 
 
 impl<'a, T, V: Clone + Ord + PartialOrd + Eq + Unsigned> Graph<'a, T, V> {
+    /// Finds the shortest path between two nodes.
+    ///
+    /// Uses Dijkstra's shortest path to connect two nodes with the least cost.
+    /// Edge data is used as the "cost" metric, where a greater value incurs more cost.
+    ///
+    /// The returned `Option` has `Some` if a route can be calculated, containing a structure
+    /// that has the path taken and the total cost of the path or `None` if there was no
+    /// path between nodes.
     pub fn shortest_path(&self, from_node: NodeIdentifier, to_node: NodeIdentifier) -> Option<ShortestPathResult<V>> {
         // Current shortest path to node
         let mut dist = Vec::from_elem(self.node_count(), None);
