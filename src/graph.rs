@@ -1,5 +1,5 @@
 use std::collections::HashSet;
-use std::collections::PriorityQueue;
+use std::collections::BinaryHeap;
 use std::fmt;
 use std::num::zero;
 use std::slice::Items;
@@ -61,7 +61,7 @@ impl<'a, T, V> Graph<'a, T, V> {
     /// This is a directed edge, with the edge going from `from_index` going to `to_index`.
     /// The `data` is attached to the edge.
     pub fn connect(&mut self, from_index: NodeIdentifier, to_index: NodeIdentifier, data: V) {
-        let edge_list = self.edges.get_mut(from_index);
+        let edge_list = &mut self.edges[from_index];
         edge_list.push(Edge { data: data, dest: to_index });
     }
 
@@ -256,9 +256,9 @@ impl<'a, T, V: Clone + Ord + PartialOrd + Eq + Unsigned> Graph<'a, T, V> {
         let mut prev = Vec::from_elem(self.node_count(), None);
 
         // Current nodes to consider
-        let mut pq = PriorityQueue::new();
+        let mut pq = BinaryHeap::new();
 
-        *dist.get_mut(from_node) = Some(zero::<V>());
+        dist[from_node] = Some(zero::<V>());
         pq.push(NodeCost { cost: zero::<V>(), node: from_node });
         while pq.len() > 0 {
             // Get the current lowest cost node on the fringe
@@ -286,8 +286,8 @@ impl<'a, T, V: Clone + Ord + PartialOrd + Eq + Unsigned> Graph<'a, T, V> {
 
                 // Update the queue and the shortest path for the node if we should
                 if should_update_cost {
-                    *dist.get_mut(edge.dest) = Some(cost_to_node.clone());
-                    *prev.get_mut(edge.dest) = Some(current.node);
+                    dist[edge.dest] = Some(cost_to_node.clone());
+                    prev[edge.dest] = Some(current.node);
                     pq.push(NodeCost { cost: cost_to_node, node: edge.dest });
                 }
             }
