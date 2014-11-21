@@ -1,7 +1,6 @@
 use std::collections::HashSet;
 use std::collections::BinaryHeap;
 use std::fmt;
-use std::num::zero;
 use std::slice::Items;
 
 /// Identifier for nodes in a Graph
@@ -241,7 +240,7 @@ pub struct ShortestPathResult<V> {
 }
 
 
-impl<'a, T, V: Clone + Ord + PartialOrd + Eq + Unsigned> Graph<'a, T, V> {
+impl<'a, T> Graph<'a, T, uint> {
     /// Finds the shortest path between two nodes.
     ///
     /// Uses Dijkstra's shortest path to connect two nodes with the least cost.
@@ -250,7 +249,7 @@ impl<'a, T, V: Clone + Ord + PartialOrd + Eq + Unsigned> Graph<'a, T, V> {
     /// The returned `Option` has `Some` if a route can be calculated, containing a structure
     /// that has the path taken and the total cost of the path or `None` if there was no
     /// path between nodes.
-    pub fn shortest_path(&self, from_node: NodeIdentifier, to_node: NodeIdentifier) -> Option<ShortestPathResult<V>> {
+    pub fn shortest_path(&self, from_node: NodeIdentifier, to_node: NodeIdentifier) -> Option<ShortestPathResult<uint>> {
         // Current shortest path to node
         let mut dist = Vec::from_elem(self.node_count(), None);
         let mut prev = Vec::from_elem(self.node_count(), None);
@@ -258,8 +257,8 @@ impl<'a, T, V: Clone + Ord + PartialOrd + Eq + Unsigned> Graph<'a, T, V> {
         // Current nodes to consider
         let mut pq = BinaryHeap::new();
 
-        dist[from_node] = Some(zero::<V>());
-        pq.push(NodeCost { cost: zero::<V>(), node: from_node });
+        dist[from_node] = Some(0u);
+        pq.push(NodeCost { cost: 0u, node: from_node });
         while pq.len() > 0 {
             // Get the current lowest cost node on the fringe
             let current = pq.pop().unwrap();
@@ -438,12 +437,12 @@ mod test {
     #[test]
     fn test_bfs_search() {
         let mut g: Graph<int, ()> = Graph::new();
-        let nodes = g.insert_all([0i, 1, 2, 3]);
+        let nodes = g.insert_all([0i, 1, 2, 3].as_slice());
         g.connect_all([
             (nodes[0], nodes[1], ()),
             (nodes[1], nodes[2], ()),
             (nodes[0], nodes[3], ())
-        ]);
+        ].as_slice());
 
         assert!(g.bfs(nodes[0], 1i).is_some());
         assert!(g.bfs(nodes[0], 10i).is_none());
@@ -452,13 +451,13 @@ mod test {
     #[test]
     fn test_shortest_path() {
         let mut g = Graph::new();
-        let nodes = g.insert_all([0i, 1, 2, 3]);
+        let nodes = g.insert_all([0i, 1, 2, 3].as_slice());
         g.connect_all([
             (nodes[0], nodes[1], 5u),
             (nodes[1], nodes[2], 5u),
             (nodes[0], nodes[3], 10u),
             (nodes[1], nodes[3], 3u)
-        ]);
+        ].as_slice());
 
         let r1 = g.shortest_path(nodes[0], nodes[0]).unwrap();
         let r2 = g.shortest_path(nodes[0], nodes[3]).unwrap();
