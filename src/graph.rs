@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 use std::collections::BinaryHeap;
 use std::fmt;
-use std::slice::Items;
+use std::slice::Iter;
 
 /// Identifier for nodes in a Graph
 pub type NodeIdentifier = uint;
@@ -118,7 +118,7 @@ impl<'a, T, V> Graph<'a, T, V> {
     }
 
     /// Iterate over the nodes of the graph
-    pub fn iter(&'a self) -> Items<'a, T> {
+    pub fn iter(&'a self) -> Iter<'a, T> {
         self.nodes.iter()
     }
 
@@ -187,9 +187,9 @@ impl<'a, T, V: Clone> Graph<'a, T, V> {
     pub fn connect_all(&mut self, connections: &[(NodeIdentifier, NodeIdentifier, V)]) {
         for conn in connections.iter() {
             self.connect(
-                conn.ref0().clone(),
-                conn.ref1().clone(),
-                conn.ref2().clone(),
+                conn.0.clone(),
+                conn.1.clone(),
+                conn.2.clone(),
             );
         }
     }
